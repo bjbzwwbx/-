@@ -92,38 +92,38 @@
         <ul id="news-list">
         </ul>
     </div>
-    <script type="module">
-        const URL = function (num) {
-            return `https://hacker-news.firebaseio.com/v0/item/${num}.json?print=pretty`
-        }
-        var tmp = document.getElementById("tmp")
-        var box = document.getElementsByClassName("content")[0]
-        const url2 = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
-        await fetch(url2).then(res => {return res.json();}).then(json => {generate(json)});//console.log(json);
-        function generate(Arrays) {
-            for(let i=0;i<50;i++){
-                fetch(URL(Arrays[i])).then(res => {return res.json();}).then(json => {
-                    // console.log(json)
-                    let newNode = tmp.cloneNode(true)
-                    newNode.style.display = "block"
-                    newNode.firstElementChild.innerHTML = json["id"].toString()
-                    newNode.lastElementChild.firstElementChild.innerHTML  = json["title"]
-                    var a = json["url"].split('/')
-                    // console.log(typeof json["url"])
-                    // console.log(json["url"],a)
-                    var newHost = document.createElement("span")
-                    newHost.innerHTML = " ("+a[2]+") "
-                    newHost.style.color = "#aaaaaa"
-                    newNode.lastElementChild.firstElementChild.appendChild(newHost)
-                    newNode.lastElementChild.lastElementChild.firstElementChild.innerHTML = json['by']
-                    let passTime = parseInt((new Date().getTime()/1000-json['time'])/60,10)
-                    newNode.lastElementChild.lastElementChild.firstElementChild.nextElementSibling.innerHTML = passTime
-                    newNode.lastElementChild.lastElementChild.lastElementChild.innerHTML = json['descendants']
-                    box.appendChild(newNode)
-                });
-            }
-        }
-    </script>
 </body>
+<script type="module">
+    const URL = function (num) {
+        return `https://hacker-news.firebaseio.com/v0/item/${num}.json?print=pretty`
+    }
+    var tmp = document.getElementById("tmp")
+    var box = document.getElementsByClassName("content")[0]
+    const url2 = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
+    await fetch(url2).then(res => { return res.json(); }).then(json => { generate(json) });//console.log(json);
+    function generate(Arrays) {
+        for (let i = 0; i < 50; i++) {
+            fetch(URL(Arrays[i])).then(res => { return res.json(); }).then(json => {
+                // console.log(json)
+                let newNode = tmp.cloneNode(true)
+                newNode.style.display = "block"
+                newNode.firstElementChild.innerHTML = json["id"].toString()
+                newNode.lastElementChild.firstElementChild.innerHTML = json["title"]
+                var a = json["url"].split('/')
+                // console.log(typeof json["url"])
+                // console.log(json["url"],a)
+                var newHost = document.createElement("span")
+                newHost.innerHTML = " (" + a[2] + ") "
+                newHost.style.color = "#aaaaaa"
+                newNode.lastElementChild.firstElementChild.appendChild(newHost)
+                newNode.lastElementChild.lastElementChild.firstElementChild.innerHTML = json['by']
+                let passTime = parseInt((new Date().getTime() / 1000 - json['time']) / 60, 10)
+                newNode.lastElementChild.lastElementChild.firstElementChild.nextElementSibling.innerHTML = passTime
+                newNode.lastElementChild.lastElementChild.lastElementChild.innerHTML = json['descendants']
+                box.appendChild(newNode)
+            });
+        }
+    }
+</script>
 
 </html>
